@@ -18,15 +18,16 @@
 #
 #########################################################################
 
+import ast
+
 # Django settings for the GeoNode project.
 import os
-import ast
 
 try:
     from urllib.parse import urlparse, urlunparse
-    from urllib.request import urlopen, Request
+    from urllib.request import Request, urlopen
 except ImportError:
-    from urllib2 import urlopen, Request
+    from urllib2 import Request, urlopen
     from urlparse import urlparse, urlunparse
 # Load more settings from a file called local_settings.py if it exists
 try:
@@ -44,7 +45,9 @@ PROJECT_NAME = 'my_geonode'
 if not SITEURL.endswith('/'):
     SITEURL = '{}/'.format(SITEURL)
 
-SITENAME = os.getenv("SITENAME", 'my_geonode')
+
+SITENAME = os.getenv("SITENAME", 'my_geonode', )
+APP_ENV = os.getenv("APP_ENV", 'local')
 
 # Defines the directory that contains the settings file as the LOCAL_ROOT
 # It is used for relative settings elsewhere.
@@ -57,7 +60,7 @@ WSGI_APPLICATION = "{}.wsgi.application".format(PROJECT_NAME)
 LANGUAGE_CODE = os.getenv('LANGUAGE_CODE', "en")
 
 if PROJECT_NAME not in INSTALLED_APPS:
-    INSTALLED_APPS += (PROJECT_NAME, 'myapp')
+    INSTALLED_APPS += (PROJECT_NAME, 'myapp', 'geodb')
 
 # Location of url mappings
 ROOT_URLCONF = os.getenv('ROOT_URLCONF', '{}.urls'.format(PROJECT_NAME))
@@ -77,6 +80,10 @@ loaders = TEMPLATES[0]['OPTIONS'].get('loaders') or [
 # loaders.insert(0, 'apptemplates.Loader')
 TEMPLATES[0]['OPTIONS']['loaders'] = loaders
 TEMPLATES[0].pop('APP_DIRS', None)
+
+
+TEMPLATES[0]['OPTIONS']['context_processors'] += ('django.contrib.auth.context_processors.auth','my_geonode.context_processors.export_vars')   
+
 
 LOGGING = {
     'version': 1,
@@ -127,6 +134,36 @@ LOGGING = {
     },
 }
 
+MIDDLEWARE_CLASSES = [
+    'geodb.middleware.multiDomainAccessMiddleware',
+]
+
+# Celery App Configuration
+CELERY_APP = 'geodb'
+CELERY_TASK_DEFAULT_QUEUE = 'default'
+CELERY_TASK_DEFAULT_EXCHANGE = 'default'
+CELERY_TASK_DEFAULT_ROUTING_KEY = 'default'
+CELERY_TASK_DEFAULT_EXCHANGE_TYPE = "direct"
+
+# Celery Beat Configuration (optional)
+CELERY_BEAT_SCHEDULE = {
+    'get_latest_shakemap_every_1_second': {
+        'task':'geodb.tasks.updateLatestShakemap',
+        'schedule': timedelta(seconds=1),
+        'options': {
+            'priority': 0
+        }
+    },
+
+    'get_latest_earthquake_every_1_second': {
+        'task':'geodb.tasks.updateLatestEarthQuake',
+        'schedule': timedelta(seconds=1),
+        'options': {
+            'priority': 1
+        }
+    },
+}
+
 CENTRALIZED_DASHBOARD_ENABLED = ast.literal_eval(
     os.getenv('CENTRALIZED_DASHBOARD_ENABLED', 'False'))
 if CENTRALIZED_DASHBOARD_ENABLED and USER_ANALYTICS_ENABLED and 'geonode_logstash' not in INSTALLED_APPS:
@@ -157,14 +194,12 @@ AUTH_EXEMPT_URLS += (f'{FORCE_SCRIPT_NAME}/landing',)
 # Settings for MONITORING plugin
 
 
-MIDDLEWARE_CLASSES = []
-
 CORS_ORIGIN_ALLOW_ALL = ast.literal_eval(os.environ.get('CORS_ORIGIN_ALLOW_ALL', 'False'))
 GEOIP_PATH = os.getenv('GEOIP_PATH', os.path.join(PROJECT_ROOT, 'GeoIPCities.dat'))
 MONITORING_ENABLED = ast.literal_eval(os.environ.get('MONITORING_ENABLED', 'True'))
 
 MONITORING_CONFIG = os.getenv("MONITORING_CONFIG", None)
-MONITORING_HOST_NAME = os.getenv("MONITORING_HOST_NAME", HOSTNAME)
+MONITORING_HOST_NAME = os.getenv("MONITORING_HOST_NAME", 'localhost')
 MONITORING_SERVICE_NAME = os.getenv("MONITORING_SERVICE_NAME", 'local-geonode')
 
 # how long monitoring data should be stored
@@ -206,3 +241,5 @@ MONITORING_DATA_AGGREGATION = (
 USER_ANALYTICS_ENABLED = ast.literal_eval(os.getenv('USER_ANALYTICS_ENABLED', 'False'))
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+CELERY_IMPORTS = ('geodb.tasks',)
