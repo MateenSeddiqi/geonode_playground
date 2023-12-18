@@ -165,12 +165,20 @@ li {
   min-width: 400px !important;
 }
 
+.msgapi .ms-map-popup .mapstore-identify-viewer .alert {
+  max-width: 400px !important;
+}
+
 #upload-status {
   margin-top: 20px;
 }
 
-.msgapi #mapstore-map-footer-container {
-  margin-bottom: 40px !important;
+.msgapi .mapstore-map-footer{
+  margin-bottom: -40px !important;
+}
+
+.msgapi .mapstore-map-footer{
+  margin-bottom: -35px !important;
 }
 
 .msgapi .background-preview-button {
@@ -196,4 +204,8 @@ li {
 
 .panel-default .panel-heading .panel-title a:hover {
   color: #a72824;
+}
+
+div.gn-share-permissions-container ul.gn-share-permissions-list li.gn-share-permissions-pinned div.gn-share-permissions-row:nth-last-child(2) {
+  display: none;
 }

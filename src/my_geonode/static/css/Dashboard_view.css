@@ -107,6 +107,7 @@
 
         .msgapi .gn-viewer-layout-center{
             background-color: #f5f5f5;
+            margin-bottom: 40px !important;
         }
 
                    
@@ -215,16 +216,6 @@
         .gn-page-wrapper.gn-desktop {
             background-color: #F6EAE9;
         }
-
-        .footer_container {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: white;
-            padding: 0.5rem 4rem !important;
-            z-index: 9999;
-        }
-
         .msgapi .gn-card-grid .gn-card-grid-pagination {
             padding: 1rem 1rem 3rem;
             text-align: center;
@@ -278,4 +269,11 @@
             padding: 1rem 1rem 5rem 1rem !important;
             position: absolute;
             width: 100%;
+        }
+
+        .msgapi .btn-group-vertical .square-button-md, .msgapi .square-button-md {
+            height: 30px;
+            outline: 0;
+            padding: 0 !important;
+            width: 30px;
         }

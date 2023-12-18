@@ -63,7 +63,7 @@
                 <div class="gn-menu-content-right">
                     <div class="">
                         <ul class="top_bar_menu_button">
-                            <a class="..." href="/account/login/?next=/"><button class="landing-login-btn">Login<button></a>
+                            <a class="..." href="/account/login/?next={{request.GET.next}}"><button class="landing-login-btn">Login<button></a>
                             <a class="..." href="/account/signup/"><button class="landing-register-btn">Register</button></a>
                         </ul>
                     </div>
@@ -97,15 +97,30 @@
                         <p>Maps</p>
                     </div>
                 </div>
-                <div class="mt-10 w-fit">
-                    <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=Gw_39i0qME-FKmS4zgwZ14QONBfARMhDgJ1-pixkQvJUMjI4M1BWSDY3RFJDQVcwSkRaTU1SRDU1WC4u" target="_blank" class="w-fit">
-                        <button class="landing-login-btn row">
-                            Request Service Support
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" width="18" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                            </svg>
-                        </button>
-                    </a>
+
+                <div class="flex items-center gap-6">
+                    <div class="mt-10 w-fit">
+                        <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=Gw_39i0qME-FKmS4zgwZ14QONBfARMhDgJ1-pixkQvJUMjI4M1BWSDY3RFJDQVcwSkRaTU1SRDU1WC4u"
+                            target="_blank" class="w-fit">
+                            <button class="landing-login-btn">
+                                Request Service Support
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    width="18" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                                </svg>
+                            </button>
+                        </a>
+                    </div>
+                    <div class="mt-10 w-fit">
+                        <a href="/account/signup/" target="_self" class="w-fit">
+                            <button class="landing-login-btn">
+                                Register Here
+                                <img src="{% static 'img/register-svgrepo-com.svg' %}" class="Register_icon" width="18" height="18"
+                                alt="burger illustration">
+                            </button>
+                        </a>
+                    </div>
                 </div>
 
             </div>
