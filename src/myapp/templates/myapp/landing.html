@@ -57,13 +57,13 @@
             <div class="px-24 py-1 mx-auto flex justify-between items-center">
                 <div class="landing_hero_content ">
                     <div class="landing_logo flex items-center space-x-2">
-                        <img src="../../../static/img/immap_logo.png" class="w-auto h-16">
+                        <img src="{% static 'img/immap_logo.png' %}" class="w-auto h-16">
                     </div>
                 </div>
                 <div class="gn-menu-content-right">
                     <div class="">
                         <ul class="top_bar_menu_button">
-                            <a class="..." href="/account/login/?next={{request.GET.next}}"><button class="landing-login-btn">Login<button></a>
+                            <a class="..." id="landing-login-btn" href="/account/login/?next={{request.GET.next}}"><button class="landing-login-btn">Login<button></a>
                             <a class="..." href="/account/signup/"><button class="landing-register-btn">Register</button></a>
                         </ul>
                     </div>
@@ -126,7 +126,7 @@
             </div>
 
             <div class="hero_intro_img">
-                <img src="../../../static/img/image 8.png">
+                <img src="{% static 'img/afg-map.webp' %}" style="max-width:unset">
             </div>
         </div>
 
@@ -185,9 +185,9 @@
                     
                 </div>
 
-                <div class="shadow mt-16 grid divide-x divide-y divide-primary-50 overflow-hidden rounded-3xl border border-primary-50 text-gray-600  sm:grid-cols-2 lg:grid-cols-3 lg:divide-y-0">
+                <!-- <div class="shadow mt-16 grid divide-x divide-y divide-primary-50 overflow-hidden rounded-3xl border border-primary-50 text-gray-600  sm:grid-cols-2 lg:grid-cols-4 lg:divide-y-0">
 
-                    <div class="group relative bg-white  transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
+                     <div class="group relative bg-white  transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
                         <div class="relative space-y-8 py-12 p-8">
                         <img src="{% static 'img/earthquakes.svg' %}" class="w-12" width="512" height="512" alt="burger illustration">
 
@@ -200,16 +200,16 @@
                                 Near-real time shakemaps and estimates of people and buildings impacted by earthquakes.
                             </p>
                         </div>
-                        <!-- <a href="#" class="flex items-center justify-between group-hover:text-secondary">
+                        <a href="#" class="flex items-center justify-between group-hover:text-secondary">
                             <span class="text-sm"></span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
                             <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd"></path>
                             </svg>                
-                        </a> -->
+                        </a>
                         </div>
                     </div>
 
-                    <div class="group relative bg-white  transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
+                     <div class="group relative bg-white  transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
                         <div class="relative space-y-8 py-12 p-8">
                         <img src="{% static 'img/flood.svg' %}" class="w-12" width="512" height="512" alt="burger illustration">
 
@@ -221,39 +221,18 @@
                                 GLOFAS based river flood forecasts and maps of affected areas.
                             </p>
                         </div>
-                        <!-- <a href="#" class="flex items-center justify-between group-hover:text-secondary">
+                        <a href="#" class="flex items-center justify-between group-hover:text-secondary">
                             <span class="text-sm"></span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
                             <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd"></path>
                             </svg>                
-                        </a> -->
+                        </a>
                         </div>
-                    </div>
+                    </div> 
 
-                    <div class="group relative bg-white  transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
-                        <div class="relative space-y-8 py-12 p-8">
-                        <img src="{% static 'img/drought.svg' %}" class="w-12" width="512" height="512" alt="burger illustration">
+                </div> -->
 
-                        <div class="space-y-2">
-                            <h5 class="text-xl font-semibold text-gray-700  transition group-hover:text-secondary">
-                                Drought
-                            </h5>
-                            <p class="text-gray-600 ">
-                                Forecast of drought affected areas and type of land cover impacted.
-                            </p>
-                        </div>
-                        <!-- <a href="#" class="flex items-center justify-between group-hover:text-secondary">
-                            <span class="text-sm"></span>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-                            <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd"></path>
-                            </svg>                
-                        </a> -->
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="shadow mt-5 grid divide-x divide-y divide-primary-50 overflow-hidden rounded-3xl border border-primary-50 text-gray-600  sm:grid-cols-2 lg:grid-cols-3 lg:divide-y-0">
+                <div class="shadow mt-5 grid divide-x divide-y divide-primary-50 overflow-hidden rounded-3xl border border-primary-50 text-gray-600  sm:grid-cols-2 lg:grid-cols-2 lg:divide-y-0">
 
                     <div class="group relative bg-white  transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
                         <div class="relative space-y-8 py-12 p-8">
@@ -298,6 +277,9 @@
                         </div>
                     </div>
 
+                </div>
+
+                <div class="shadow mt-5 grid divide-x divide-y divide-primary-50 overflow-hidden rounded-3xl border border-primary-50 text-gray-600  sm:grid-cols-2 lg:grid-cols-2 lg:divide-y-0">
                     <div class="group relative bg-white  transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
                         <div class="relative space-y-8 py-12 p-8">
                         <img src="{% static 'img/settlement.svg' %}" class="w-12" width="512" height="512" alt="burger illustration">
@@ -319,6 +301,28 @@
                         </div>
                     </div>
 
+                    <div class="group relative bg-white  transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
+                        <div class="relative space-y-8 py-12 p-8">
+                        <img src="{% static 'img/drought.svg' %}" class="w-12" width="512" height="512" alt="burger illustration">
+
+                        <div class="space-y-2">
+                            <h5 class="text-xl font-semibold text-gray-700  transition group-hover:text-secondary">
+                                Drought
+                            </h5>
+                            <p class="text-gray-600 ">
+                                Forecast of drought affected areas and type of land cover impacted.
+                            </p>
+                        </div>
+                        <!-- <a href="#" class="flex items-center justify-between group-hover:text-secondary">
+                            <span class="text-sm"></span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                            <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clip-rule="evenodd"></path>
+                            </svg>                
+                        </a> -->
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -329,5 +333,19 @@
 
         {% block scripts %}{% endblock %}
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var loginBtn = document.getElementById('landing-login-btn');
+            var hash = window.location.hash;
+            if (hash) {
+                var loginUrl = loginBtn.getAttribute('href');
+                loginUrl += hash;
+                loginBtn.setAttribute('href', loginUrl);
+            }
+        });
+    </script>
+
+    
 </body>
 </html>

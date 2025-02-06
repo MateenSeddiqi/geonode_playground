@@ -22,6 +22,7 @@ import ast
 
 # Django settings for the GeoNode project.
 import os
+import sentry_sdk
 
 try:
     from urllib.parse import urlparse, urlunparse
@@ -154,21 +155,21 @@ CELERY_TASK_DEFAULT_EXCHANGE_TYPE = "direct"
 
 # Celery Beat Configuration (optional)
 CELERY_BEAT_SCHEDULE = {
-    'get_latest_shakemap_every_1_second': {
-        'task':'geodb.tasks.updateLatestShakemap',
-        'schedule': timedelta(minutes=10),
-        'options': {
-            'priority': 0
-        }
-    },
+    # 'get_latest_shakemap_every_10_minutes': {
+    #     'task':'geodb.tasks.updateLatestShakemap',
+    #     'schedule': timedelta(minutes=10),
+    #     'options': {
+    #         'priority': 0
+    #     }
+    # },
 
-    'get_latest_earthquake_every_1_second': {
-        'task':'geodb.tasks.updateLatestEarthQuake',
-        'schedule': timedelta(minutes=10),
-        'options': {
-            'priority': 1
-        }
-    },
+    # 'get_latest_earthquake_every_10_minutes': {
+    #     'task':'geodb.tasks.updateLatestEarthQuake',
+    #     'schedule': timedelta(minutes=10),
+    #     'options': {
+    #         'priority': 1
+    #     }
+    # },
     # # PRODUCTION GLOFAS TASKS
     # 'get_get_nc_glofas_file_every_at_1_am': {
     #     'task':'geodb.tasks.getNCGlofasFlood',
@@ -186,22 +187,30 @@ CELERY_BEAT_SCHEDULE = {
     #     }
     # },
 
-    DEV GLOFAS TASKS
-    'get_get_nc_glofas_file_every_at_1_am': {
-        'task':'geodb.tasks.getNCGlofasFlood',
-        'schedule': timedelta(minutes=10),
-        'options': {
-            'priority': 2
-        }
-    },
+    # DEV GLOFAS TASKS
+    # 'get_get_nc_glofas_file_every_at_1_am': {
+    #     'task':'geodb.tasks.getNCGlofasFlood',
+    #     'schedule': timedelta(minutes=10),
+    #     'options': {
+    #         'priority': 2
+    #     }
+    # },
     
-    'get_latest_glofas_flood_every_at_1_am': {
-        'task':'geodb.tasks.UpdateLatestGlofasFlood',
-        'schedule': timedelta(minutes=10),
-        'options': {
-            'priority': 3
-        }
-    },
+    # 'get_latest_glofas_flood_every_10_minutes': {
+    #     'task':'geodb.tasks.UpdateLatestGlofasFlood',
+    #     'schedule': timedelta(minutes=10),
+    #     'options': {
+    #         'priority': 2
+    #     }
+    # },
+    
+    # 'delete_nc_files_every_10_minutes': {
+    #     'task':'geodb.tasks.RemoveNcFilesFor7Days',
+    #     'schedule': timedelta(minutes=10),
+    #     'options': {
+    #         'priority': 3
+    #     }
+    # },
 }
 
 CENTRALIZED_DASHBOARD_ENABLED = ast.literal_eval(
@@ -217,6 +226,13 @@ if CENTRALIZED_DASHBOARD_ENABLED and USER_ANALYTICS_ENABLED and 'geonode_logstas
 LDAP_ENABLED = ast.literal_eval(os.getenv('LDAP_ENABLED', 'False'))
 if LDAP_ENABLED and 'geonode_ldap' not in INSTALLED_APPS:
     INSTALLED_APPS += ('geonode_ldap',)
+
+CACHES = {
+     'default': {
+         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+         'LOCATION': '127.0.0.1:11211',
+     },
+}
 
 # Add your specific LDAP configuration after this comment:
 # https://docs.geonode.org/en/master/advanced/contrib/#configuration
@@ -283,3 +299,26 @@ USER_ANALYTICS_ENABLED = ast.literal_eval(os.getenv('USER_ANALYTICS_ENABLED', 'F
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 CELERY_IMPORTS = ('geodb.tasks',)
+
+
+if APP_ENV == 'production':
+    sentry_sdk.init(
+        dsn="https://b384eb8fa97dd85396a43cfcf8c7d837@o4506732599640064.ingest.sentry.io/4506732604030976",
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for performance monitoring.
+        traces_sample_rate=1.0,
+        # Set profiles_sample_rate to 1.0 to profile 100%
+        # of sampled transactions.
+        # We recommend adjusting this value in production.
+        profiles_sample_rate=1.0,
+    )
+    
+# PROJECT_ROOT
+# STATIC_URL="static/"
+# STATIC_ROOT="/var/www/html/static_root"
+# STATIC_ROOT= LOCAL_ROOT + "/static_root"
+
+# MEDIA_URL="uploaded/"
+# MEDIA_ROOT = LOCAL_ROOT + "/uploaded"
+# MEDIA_ROOT="/var/www/html/uploaded"
+WHITENOISE_MAX_AGE= os.getenv('WHITENOISE_MAX_AGE', "7200")

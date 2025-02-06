@@ -107,7 +107,7 @@
 
         .msgapi .gn-viewer-layout-center{
             background-color: #f5f5f5;
-            margin-bottom: 40px !important;
+            /* margin-bottom: 40px !important; */
         }
 
                    
@@ -276,4 +276,22 @@
             outline: 0;
             padding: 0 !important;
             width: 30px;
+        }
+
+        .msgapi .Select-menu-outer .Select-menu .is-selected {
+            background-color: #a72824 !important;
+            color: #fff !important;
+            font-weight: bold;
+        }
+
+        .msgapi .gn-share-permissions-head .gn-share-permissions-row .gn-share-permissions-name button, .msgapi .gn-share-permissions-head .gn-share-permissions-row .gn-share-permissions-options button{
+            pointer-events: none;
+        }
+        
+        .msgapi .gn-share-permissions-head .gn-share-permissions-row .gn-share-permissions-name button i, .msgapi .gn-share-permissions-head .gn-share-permissions-row .gn-share-permissions-options button i{
+            display: none;
+        }
+
+        .msgapi .container{
+            width: 1400px !important;
         }
